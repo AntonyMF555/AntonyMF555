@@ -1,0 +1,38 @@
+#define BLYNK_TEMPLATE_ID "TMPL3tSVOfC63"  // optional, if using templates
+#define BLYNK_TEMPLATE_NAME "Testing"  // optional, if using templates
+#define BLYNK_AUTH_TOKEN "L3FbCQQCco9MSxE4Ttnms27L08ryBwOD"  // Replace with your Auth Token from Blynk app
+
+#include <WiFi.h>
+#include <BlynkSimpleEsp32.h>
+
+char auth[] = BLYNK_AUTH_TOKEN;  // Auth token for Blynk app
+char ssid[] = "AirFiber-ir3Ahb";  // Your WiFi SSID
+char pass[] = "S3come&getmarry";  // Your WiFi password
+
+int ledPin = 2;  // GPIO2 for onboard LED
+
+void setup() {
+  // Start serial communication for debugging
+  Serial.begin(115200);
+
+  // Connect to WiFi
+  Blynk.begin(auth, ssid, pass);
+  
+  // Set LED pin as OUTPUT
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  Blynk.run();  // Blynk's main process
+}
+
+// This function will be triggered when you press the button on Blynk app
+BLYNK_WRITE(V1) {
+  int pinValue = param.asInt();  // Get value of the button (1 or 0)
+  
+  if (pinValue == 1) {
+    digitalWrite(ledPin, HIGH);  // Turn LED on
+  } else {
+    digitalWrite(ledPin, LOW);  // Turn LED off
+  }
+}
